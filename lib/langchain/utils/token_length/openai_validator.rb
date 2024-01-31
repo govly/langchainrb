@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "tiktoken_ruby"
-
 module Langchain
   module Utils
     module TokenLength
@@ -64,13 +62,7 @@ module Langchain
         # @return [Integer] The token length of the text
         #
         def self.token_length(text, model_name, options = {})
-          # tiktoken-ruby doesn't support text-embedding-3-large or text-embedding-3-small yet
-          if ["text-embedding-3-large", "text-embedding-3-small"].include?(model_name)
-            model_name = "text-embedding-ada-002"
-          end
-
-          encoder = Tiktoken.encoding_for_model(model_name)
-          encoder.encode(text).length
+          text.squish.length / 5
         end
 
         def self.token_limit(model_name)
@@ -95,8 +87,6 @@ module Langchain
         # @return [Integer] The token length of the messages
         #
         def self.token_length_from_messages(messages, model_name, options = {})
-          encoding = Tiktoken.encoding_for_model(model_name)
-
           if ["gpt-3.5-turbo-0613", "gpt-3.5-turbo-16k-0613", "gpt-4-0314", "gpt-4-32k-0314", "gpt-4-0613", "gpt-4-32k-0613"].include?(model_name)
             tokens_per_message = 3
             tokens_per_name = 1
@@ -119,7 +109,7 @@ module Langchain
           messages.each do |message|
             num_tokens += tokens_per_message
             message.each do |key, value|
-              num_tokens += encoding.encode(value).length
+              num_tokens += value.squish.length / 5
               num_tokens += tokens_per_name if ["name", :name].include?(key)
             end
           end

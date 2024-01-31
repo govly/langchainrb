@@ -1,4 +1,5 @@
 ## [Unreleased]
+- Remove toktoken_ruby to avoid current platform issues on linux
 - Fix and refactor of `Langchain::LLM::Ollama`, responses can now be streamed.
 
 ## [0.9.0]
@@ -25,7 +26,7 @@
 - AWS Bedrock is available as an LLM provider. Available models from AI21, Cohere, AWS, and Anthropic.
 
 ## [0.7.3] - 2023-11-08
-- LLM response passes through the context in RAG cases 
+- LLM response passes through the context in RAG cases
 - Fix gpt-4 token length validation
 
 ## [0.7.2] - 2023-11-02
@@ -70,7 +71,7 @@
 
 ## [0.6.13] - 2023-08-23
 - Add `k:` parameter to all `ask()` vector search methods
-- Bump Faraday to 2.x 
+- Bump Faraday to 2.x
 
 ## [0.6.12] - 2023-08-13
 
